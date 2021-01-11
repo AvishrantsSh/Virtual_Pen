@@ -11,7 +11,7 @@ class tracker(object):
         
     def preprocess(self,img):
         self.img = img.copy()
-        self.img = cv2.blur(self.img,(5,5))
+        # self.img = cv2.blur(self.img,(5,5))
         obj = self.obj_filter()
         matrix = np.transpose(np.nonzero(obj))
         if len(matrix) > 0:
@@ -27,9 +27,12 @@ class tracker(object):
         #Sobel Filtration
 
         #Method-2
-        obj = (self.img//128)*255
-        obj[obj == self.background] == [0,0,0]
-        obj = cv2.bitwise_not(cv2.cvtColor(obj,cv2.COLOR_BGR2GRAY))
+        # obj = (self.img//128)*255
+        # obj[obj == self.background] == [0,0,0]
+        # obj = cv2.bitwise_not(cv2.cvtColor(obj,cv2.COLOR_BGR2GRAY))
+        
+        #Method-3
+        obj = cv2.Canny(self.img, 100, 200)
         return obj
     
     def draw(self):
