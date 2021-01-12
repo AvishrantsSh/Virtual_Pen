@@ -1,10 +1,12 @@
 import cv2
 import numpy as np
+from some import Some
 class tracker(object):
     val,drawboard = [None]*2,[]
     def __init__(self,bgimage):
         tracker.drawboard = np.zeros_like(bgimage).astype(np.uint8)
         self.erase()
+        self.x = Some(bgimage)
         self.background = cv2.blur(bgimage, (5, 5))
         self.background = (self.background//128) * 255
         self.cont = True
@@ -32,7 +34,8 @@ class tracker(object):
         # obj = cv2.bitwise_not(cv2.cvtColor(obj,cv2.COLOR_BGR2GRAY))
         
         #Method-3
-        obj = cv2.Canny(self.img, 100, 200)
+        # obj = cv2.Canny(self.img, 100, 200)
+        obj = self.x.process(self.img)
         return obj
     
     def draw(self):
